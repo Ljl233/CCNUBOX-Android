@@ -1,38 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-            name="listener"
-            type="com.muxixyz.ccnubox.main.ui.todo.TodoItemListener" />
+            name="editing"
+            type="boolean" />
 
         <variable
-            name="schedule"
-            type="com.muxixyz.ccnubox.main.data.domain.Schedule" />
+            name="vh"
+            type="com.muxixyz.ccnubox.main.ui.todo.VH" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> listener.onItemClick(schedule)}">
+        android:onClick="@{() -> vh.listener.onItemClick(vh.schedule)}">
 
-        <CheckBox
+        <ImageView
             android:id="@+id/item_todo_checkbox"
-            style="@style/todo_checkbox_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
-            android:buttonTint="#8e90ff"
-            android:checked="@{schedule.done}"
-            android:onClick="@{(v) -> listener.onCheckChanged(v,schedule)}"
-            android:scaleX="1.0"
-            android:scaleY="1.0"
-            android:text="@{schedule.content}"
+            android:layout_marginBottom="20dp"
+            android:onClick="@{(v) -> vh.listener.onCheckChanged(v,vh.schedule)}"
+            android:src="@drawable/ic_baseline_check_box_outline_blank_24"
+            app:isEditing="@{vh.editing}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/item_todo_checkbox"
+            android:text="@{vh.schedule.title}"
             android:textColor="@android:color/black"
             tools:text="小组讨论" />
 
-    </LinearLayout>
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/item_todo_time"
+            android:src="@drawable/ring"
+            app:goneUnless="@{vh.editing}" />
+
+        <TextView
+            android:id="@+id/item_todo_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="@{vh.time}"
+            android:textColor="@{vh.color}"
+            app:isEditing="@{vh.editing}"
+            tools:text="12月18日"
+            tools:textColor="@color/colorHighPriority" />
+
+    </RelativeLayout>
 </layout>

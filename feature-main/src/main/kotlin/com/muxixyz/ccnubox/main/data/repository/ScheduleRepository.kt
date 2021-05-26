@@ -163,4 +163,9 @@ class ScheduleRepository(
     }
 
     private fun getScheduleById(id: String) = cachedSchedules?.get(id)
+
+    interface LoadSchedulesCallback {
+        fun onSchedulesLoaded(schedules: List<Schedule>)
+        fun onDataNotAvailable(message: String)
+    }
 }

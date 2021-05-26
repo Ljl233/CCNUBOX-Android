@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorHighPriority">#FF4D4D</color>
+    <color name="colorNoPriority">#9E9E9E</color>
+    <color name="colorMidPriority">#FFCA4D</color>
+    <color name="colorLowPriority">#6186FF</color>
+
+    <color name="colorMain">#8E90FF</color>
+</resources>

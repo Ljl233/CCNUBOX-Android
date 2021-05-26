@@ -11,6 +11,8 @@ import com.muxixyz.android.iokit.succeeded
 import com.muxixyz.ccnubox.home.R
 import com.muxixyz.ccnubox.home.databinding.FragmentTodoBinding
 import com.muxixyz.ccnubox.home.databinding.TodoAddPopupBinding
+import com.muxixyz.ccnubox.main.data.domain.Schedule
+import com.muxixyz.ccnubox.main.data.repository.ScheduleRepository
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -40,7 +42,6 @@ class TodoFragment : Fragment() {
         initFabAndPopupWindow()
         return dataBinding.root
     }
-
 
     private fun initFabAndPopupWindow() {
         if (!this::mPopupBinding.isInitialized) {
@@ -220,22 +221,17 @@ class TodoFragment : Fragment() {
     private fun refreshData() {
         if (this::listAdapter.isInitialized) {
             Log.e("TodoFragment", "refresh")
-            val schedules = mTodoViewModel.getAllSchedules()
-
-            if (schedules == null) {
-                Log.e("TodoFragment", "schedules == null")
-                return
-            }
-
-            if (schedules.succeeded) {
-                (schedules as Result.Success).data.let {
-                    listAdapter.setTodos(it)
-                    Log.e("TodoFragment", "refresh success " + it.size)
+            mTodoViewModel.getAllSchedules(object :
+                ScheduleRepository.LoadSchedulesCallback {
+                override fun onSchedulesLoaded(schedules: List<Schedule>) {
+                    listAdapter.setTodos(schedules)
                 }
-            } else {
-                (schedules as Result.Error).exception.stackTrace.let(::println)
-                Log.e("TodoFragment", "refresh error")
-            }
+
+                override fun onDataNotAvailable(message: String) {
+                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                }
+
+            })
         }
     }
 

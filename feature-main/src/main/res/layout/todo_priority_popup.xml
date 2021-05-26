@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:layout_margin="5dp"
         android:text="@string/low_priority"
-        android:textColor="#6186FF"
+        android:textColor="@color/colorLowPriority"
         android:textSize="18sp" />
 
     <TextView
@@ -23,7 +23,7 @@
         android:layout_gravity="center"
         android:layout_margin="5dp"
         android:text="@string/mid_priority"
-        android:textColor="#FFCA4D"
+        android:textColor="@color/colorMidPriority"
         android:textSize="18sp" />
 
     <TextView
@@ -33,7 +33,7 @@
         android:layout_gravity="center"
         android:layout_margin="5dp"
         android:text="@string/high_priority"
-        android:textColor="#FF4D4D"
+        android:textColor="@color/colorHighPriority"
         android:textSize="18sp" />
 
     <TextView
@@ -43,6 +43,6 @@
         android:layout_gravity="center"
         android:layout_margin="5dp"
         android:text="@string/no_priority"
-        android:textColor="#9E9E9E"
+        android:textColor="@color/colorNoPriority"
         android:textSize="18sp" />
 </LinearLayout>

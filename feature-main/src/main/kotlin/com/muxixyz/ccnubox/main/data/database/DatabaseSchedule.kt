@@ -77,6 +77,9 @@ interface ScheduleDao {
     @Update
     suspend fun updateSchedule(schedule: DatabaseSchedule)
 
+    @Query("UPDATE databaseschedule SET kind = :to WHERE id IN (:ids) AND kind LIKE :from")
+    suspend fun changeSchedulesKind(ids: List<String>, from: Int, to: Int)
+
     @Query("UPDATE databaseschedule SET done = :done WHERE id = :scheduleId")
     suspend fun updateDone(scheduleId: String, done: Boolean)
 

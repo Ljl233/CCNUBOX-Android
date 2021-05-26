@@ -61,15 +61,21 @@ class TodoViewModel(private val repository: ScheduleRepository) : ViewModel() {
         TODO("deal with result")
     }
 
-    fun getAllSchedules(): Result<List<Schedule>>? {
+    fun getAllSchedules(callback: ScheduleRepository.LoadSchedulesCallback) {
         Log.e("TdoViewModel", "getAllSchedules()")
-        var result: Result<List<Schedule>>? = null
         viewModelScope.launch {
-            result = repository.getSchedules(false)
-            Log.e("TodoViewModel","1")
+            repository.getSchedules(false).let {
+                if (it.succeeded) {
+                    (it as Result.Success).data.let { schedules ->
+                        callback.onSchedulesLoaded(schedules)
+                    }
+                } else {
+                    (it as Result.Error).exception.message.let { msg ->
+                        callback.onDataNotAvailable(msg ?: "")
+                    }
+                }
+            }
         }
-        Log.e("TodoViewModel","2")
-        return result
     }
 
 }
